@@ -1,4 +1,5 @@
 (ns core
+  (:gen-class)
   (:require [cljfx.api :as fx]))
 
 ;; Define application state
@@ -22,7 +23,10 @@
                   :children [{:fx/type :label
                               :text "Window title input"}
                              {:fx/type title-input
-                              :title title}]}}})
+                              :title title}
+                             {:fx/type :button
+                              :text "B button"
+                              :on-action (fn [_] (println "Clicked"))}]}}})
 
 ;; Create renderer with middleware that maps incoming data - description -
 ;; to component description that can be used to render JavaFX state.
@@ -34,4 +38,5 @@
 
 ;; Convenient way to add watch to an atom + immediately render app
 
-(fx/mount-renderer *state renderer)
+(defn -main [& args]
+  (fx/mount-renderer *state renderer))
