@@ -1,0 +1,6 @@
+{:deps {cljfx/cljfx {:mvn/version "1.7.13"}}
+ :aliases {:socket-repl {:exec-fn clojure.core.server/start-server
+                :exec-args {:name "server"
+                            :port 5555
+                            :accept clojure.core.server/repl
+                            :server-daemon false}}}}
