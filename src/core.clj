@@ -4,6 +4,8 @@
 
 ;; Define application state
 
+(defmulti event-handler :event/type)
+
 (def *state
   (atom {:title "App title"}))
 
@@ -34,9 +36,17 @@
 
 (def renderer
   (fx/create-renderer
-    :middleware (fx/wrap-map-desc assoc :fx/type root)))
+    :middleware (fx/wrap-map-desc (fn [state] {:fx/type root
+                                               :state state}))
+    :opts {:fx.opt/map-event-handler event-handler}))
 
 ;; Convenient way to add watch to an atom + immediately render app
 
 (defn -main [& args]
   (fx/mount-renderer *state renderer))
+
+(comment
+ (-main)
+ ; To re-render without restarting the app
+ (renderer)
+ )
